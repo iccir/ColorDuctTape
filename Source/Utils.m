@@ -9,7 +9,7 @@ extern NSColor *GetColorNamed(NSColorName colorName)
     NSColor *color = nil;
 
     if (colorName) {
-        if (@available(macOS 10.13, *)) {
+        if (@available(macOS 10.14, *)) {
             color = [NSColor colorNamed:colorName];
         } else {
             color = GetCompatibilityColorNamed(colorName);

@@ -12,7 +12,6 @@
 		55A58E5020D8A4DA00F3F2A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A58E4D20D8A4DA00F3F2A1 /* main.m */; };
 		55A58E5120D8A4DA00F3F2A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A58E4E20D8A4DA00F3F2A1 /* AppDelegate.m */; };
 		55A58E5820D8A57300F3F2A1 /* ColorCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A58E5520D8A57300F3F2A1 /* ColorCompatibility.m */; };
-		55A58E5A20D8A5EA00F3F2A1 /* ColorCompatibilityData.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A58E5920D8A5EA00F3F2A1 /* ColorCompatibilityData.m */; };
 		55A58E5D20D8A68D00F3F2A1 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A58E5C20D8A68D00F3F2A1 /* Utils.m */; };
 /* End PBXBuildFile section */
 
@@ -27,9 +26,9 @@
 		55A58E5420D8A57300F3F2A1 /* ColorCompatibilityGenerate.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = ColorCompatibilityGenerate.rb; path = Source/ColorCompatibilityGenerate.rb; sourceTree = "<group>"; };
 		55A58E5520D8A57300F3F2A1 /* ColorCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorCompatibility.m; path = Source/ColorCompatibility.m; sourceTree = "<group>"; };
 		55A58E5620D8A57300F3F2A1 /* ColorCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorCompatibility.h; path = Source/ColorCompatibility.h; sourceTree = "<group>"; };
-		55A58E5920D8A5EA00F3F2A1 /* ColorCompatibilityData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorCompatibilityData.m; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A58E5B20D8A68D00F3F2A1 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Source/Utils.h; sourceTree = "<group>"; };
 		55A58E5C20D8A68D00F3F2A1 /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = Source/Utils.m; sourceTree = "<group>"; };
+		55A58E5E20D8A8CC00F3F2A1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +45,9 @@
 		55A58E2A20D8A43700F3F2A1 = {
 			isa = PBXGroup;
 			children = (
-				55A58E4A20D8A46E00F3F2A1 /* Resources */,
+				55A58E5E20D8A8CC00F3F2A1 /* README.md */,
 				55A58E4920D8A45900F3F2A1 /* Source */,
+				55A58E4A20D8A46E00F3F2A1 /* Resources */,
 				55A58E3420D8A43700F3F2A1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,7 +88,6 @@
 			children = (
 				55A58E5620D8A57300F3F2A1 /* ColorCompatibility.h */,
 				55A58E5520D8A57300F3F2A1 /* ColorCompatibility.m */,
-				55A58E5920D8A5EA00F3F2A1 /* ColorCompatibilityData.m */,
 				55A58E5420D8A57300F3F2A1 /* ColorCompatibilityGenerate.rb */,
 			);
 			name = ColorCompatibility;
@@ -175,8 +174,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SCRIPT_FILE=\"${PROJECT_DIR}/Source/ColorCompatibilityGenerate.rb\"\nINPUT_DIR=\"${SRCROOT}/Resources/Assets.xcassets\"\nOUTPUT_FILE=\"${BUILT_PRODUCTS_DIR}/ColorCompatibilityData.m\"\n\nif [ ! -f \"$OUTPUT_FILE\" ] || [ `find \"$INPUT_DIR\" -newer \"$OUTPUT_FILE\" | wc -l` -gt 0 ]; then\n    ruby \"$SCRIPT_FILE\" \"ColorCompatibilityData\" \"$INPUT_DIR\" \"$OUTPUT_FILE\"\nfi\n";
+			shellPath = /bin/bash;
+			shellScript = "SCRIPT_FILE=\"${PROJECT_DIR}/Source/ColorCompatibilityGenerate.rb\"\nINPUT_DIR=\"${SRCROOT}/Resources/Assets.xcassets\"\nOUTPUT_FILE=\"${DERIVED_FILE_DIR}/DerivedColorCompatibilityData.h\"\n\nif [[ ! -f \"$OUTPUT_FILE\" ]]; then\n    echo \"$OUTPUT_FILE is missing, running script\"\n\n    mkdir -p \"${DERIVED_FILE_DIR}\"\n    ruby \"$SCRIPT_FILE\" \"ColorCompatibilityData\" \"$INPUT_DIR\" \"$OUTPUT_FILE\"\n\nelif [[ `find \"$INPUT_DIR\" -newer \"$OUTPUT_FILE\" | wc -l` -gt 0 ]]; then\n\n    echo \"$OUTPUT_FILE is outdated, running script\"\n    ruby \"$SCRIPT_FILE\" \"ColorCompatibilityData\" \"$INPUT_DIR\" \"$OUTPUT_FILE\"\n    echo \"$OUTPUT_FILE\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -187,7 +186,6 @@
 			files = (
 				55A58E5020D8A4DA00F3F2A1 /* main.m in Sources */,
 				55A58E5120D8A4DA00F3F2A1 /* AppDelegate.m in Sources */,
-				55A58E5A20D8A5EA00F3F2A1 /* ColorCompatibilityData.m in Sources */,
 				55A58E5D20D8A68D00F3F2A1 /* Utils.m in Sources */,
 				55A58E5820D8A57300F3F2A1 /* ColorCompatibility.m in Sources */,
 			);
@@ -321,10 +319,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ColorDuctTape/ColorDuctTape.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -340,10 +336,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ColorDuctTape/ColorDuctTape.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

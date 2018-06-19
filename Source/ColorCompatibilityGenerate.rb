@@ -10,10 +10,7 @@ OutputPath   = ARGV[2]
 
 UsedNames = { }
 
-begin
-    File.unlink(OutputPath)
-rescue
-end
+puts VariableName, InputPath, OutputPath
 
 def parseComponent(value)
     if value.kind_of? String then
@@ -86,7 +83,8 @@ Find.find(InputPath) do |path|
 end
 
 OutputLines.unshift(
-    "const struct { char *n; float r; float g; float b; float a; } " +
+    "typedef struct { char *name; float r; float g; float b; float a; } ColorCompatibilityDataEntry;" +
+    "const ColorCompatibilityDataEntry " +
     VariableName + "[] = {"
 )
 
@@ -94,6 +92,8 @@ OutputLines.push("    { 0, 0, 0, 0, 0 }")
 OutputLines.push("};")
 OutputLines.push("")
 
+puts "HERE"
+
 open(OutputPath, "w") do |f|
-    f << OutputLines.join("\n")
+    f.puts OutputLines.join("\n")
 end
