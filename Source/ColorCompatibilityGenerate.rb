@@ -83,16 +83,13 @@ Find.find(InputPath) do |path|
 end
 
 OutputLines.unshift(
-    "typedef struct { char *name; float r; float g; float b; float a; } ColorCompatibilityDataEntry;" +
     "const ColorCompatibilityDataEntry " +
     VariableName + "[] = {"
 )
 
-OutputLines.push("    { 0, 0, 0, 0, 0 }")
+OutputLines.push("    { NULL, 0, 0, 0, 0 }")
 OutputLines.push("};")
 OutputLines.push("")
-
-puts "HERE"
 
 open(OutputPath, "w") do |f|
     f.puts OutputLines.join("\n")
